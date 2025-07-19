@@ -2,8 +2,7 @@
 
 import { db } from "@/db";
 import { categories } from "@/db/schema";
-import { desc } from "drizzle-orm";
-import { log } from "node:console";
+
 
 const categoryNames = [
   "Cars and vehicles",

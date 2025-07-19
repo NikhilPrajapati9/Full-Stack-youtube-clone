@@ -1,4 +1,4 @@
-import { VideosSecction } from "../sections/videos-secction"
+import { VideosSection } from "../sections/videos-section"
 
 
 export const StudioView = () => {
@@ -11,7 +11,7 @@ export const StudioView = () => {
                 Manage your channel contents and videos
             </p>
         </div>
-        <VideosSecction/>
+        <VideosSection/>
     </div>
    )
 }
