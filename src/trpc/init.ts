@@ -47,7 +47,7 @@ export const protectedProcedure = t.procedure.use(async function isAuthed(
   if (!user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
- 
+
   const { success } = await ratelimit.limit(user.id);
 
   if (!success) {
