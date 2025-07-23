@@ -56,6 +56,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { THUMBNAIL_FALLBACK } from "@/modules/videos/constants";
 import { ThumbnailUploadModal } from "../components/thumbnail-upload-modal";
+import { ThumbnailGenerateModal } from "../components/thumbnail-generate-modal";
 
 interface FormSectionProps {
   videoId: string;
@@ -127,7 +128,9 @@ export const FormSectionSkeleton = () => {
 };
 
 export const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
-  const [ThumbnailModalOpen, setThumbnailModalOpen] = useState(false);
+  const [thumbnailModalOpen, setThumbnailModalOpen] = useState(false);
+  const [thumbnailGenerateModelOpen, setThumbnailGenerateModelOpen] =
+    useState(false);
 
   const router = useRouter();
   const utils = trpc.useUtils();
@@ -170,16 +173,7 @@ export const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
     },
   });
 
-  const generateThumbnail = trpc.videos.generateThumbnail.useMutation({
-    onSuccess: () => {
-      toast.success("backgroud job started", {
-        description: "This may take some time",
-      });
-    },
-    onError: () => {
-      toast.error("Something went wrong");
-    },
-  });
+
 
   const generateTitle = trpc.videos.generateTitle.useMutation({
     onSuccess: () => {
@@ -202,7 +196,7 @@ export const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
       toast.error("Something went wrong");
     },
   });
-
+  
   const form = useForm<z.infer<typeof videoUpdateSchema>>({
     resolver: zodResolver(videoUpdateSchema),
     defaultValues: video,
@@ -226,8 +220,13 @@ export const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
 
   return (
     <>
+      <ThumbnailGenerateModal
+        open={thumbnailGenerateModelOpen}
+        onOpenChange={setThumbnailGenerateModelOpen}
+        videoId={videoId}
+      />
       <ThumbnailUploadModal
-        open={ThumbnailModalOpen}
+        open={thumbnailModalOpen}
         onOpenChange={setThumbnailModalOpen}
         videoId={videoId}
       />
@@ -371,7 +370,7 @@ export const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={() =>
-                                generateThumbnail.mutate({ id: videoId })
+                                setThumbnailGenerateModelOpen(true)
                               }
                               className="cursor-pointer"
                             >
