@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { db } from "@/db";
-import { users, videos, videoUpdateSchema } from "@/db/schema";
+import { users, videos, videoUpdateSchema, videoViews } from "@/db/schema";
 import {
   baseProcedure,
   createTRPCRouter,
@@ -15,13 +15,14 @@ import { workflow } from "@/lib/workflow";
 export const videosRouter = createTRPCRouter({
   getOne: baseProcedure
     .input(z.object({ id: z.string().uuid() }))
-    .mutation(async ({ input }) => {
+    .query(async ({ input }) => {
       const [existingVideo] = await db
         .select({
           ...getTableColumns(videos),
           user: {
             ...getTableColumns(users),
           },
+          videoCount: db.$count(videoViews, eq(videoViews.videoId, videos.id)),
         })
         .from(videos)
         .innerJoin(users, eq(videos.userId, users.id))
