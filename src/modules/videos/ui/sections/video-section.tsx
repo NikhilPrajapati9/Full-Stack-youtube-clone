@@ -6,8 +6,8 @@ import { trpc } from "@/trpc/client";
 import { cn } from "@/lib/utils";
 
 import { VideoBanner } from "../components/video-banner";
-import { VideoPlayer } from "../components/video-player";
-import { VideoTopRow } from "../components/video-top-row";
+import { VideoPlayer, VideoPlayerSkeleton } from "../components/video-player";
+import { VideoTopRow, VideoTopRowSkeleton } from "../components/video-top-row";
 import { useAuth } from "@clerk/nextjs";
 import { toast } from "sonner";
 
@@ -17,11 +17,20 @@ interface VideoSectionProps {
 
 export const VideoSection = ({ videoId }: VideoSectionProps) => {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<VideoSectionSkeleton />}>
       <ErrorBoundary fallback={<p>Error</p>}>
         <VideoSectionSuspense videoId={videoId} />
       </ErrorBoundary>
     </Suspense>
+  );
+};
+
+const VideoSectionSkeleton = () => {
+  return (
+    <>
+      <VideoPlayerSkeleton />
+      <VideoTopRowSkeleton />
+    </>
   );
 };
 

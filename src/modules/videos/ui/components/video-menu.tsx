@@ -17,9 +17,15 @@ interface VideoMenuProps {
   videoId: string;
   variants?: "ghost" | "secondary";
   onRemove?: () => void;
+  isOwner: boolean;
 }
 
-export const VideoMenu = ({ videoId, variants, onRemove }: VideoMenuProps) => {
+export const VideoMenu = ({
+  videoId,
+  variants,
+  onRemove,
+  isOwner,
+}: VideoMenuProps) => {
   const onShare = () => {
     const fullUrl = `${
       process.env.VERCEL_URL || "http://localhost:3000"
@@ -40,14 +46,16 @@ export const VideoMenu = ({ videoId, variants, onRemove }: VideoMenuProps) => {
           <Share2Icon className="mr-2 size-4" />
           Share
         </DropdownMenuItem>
-        <DropdownMenuItem  onClick={() => {}}>
+        <DropdownMenuItem onClick={() => {}}>
           <ListPlusIcon className="mr-2 size-4 cursor-pointer" />
           Add to playlist
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer" onClick={() => {}}>
-          <Trash2 className="mr-2 size-4" />
-          Remove
-        </DropdownMenuItem>
+        {isOwner && (
+          <DropdownMenuItem className="cursor-pointer" onClick={onRemove}>
+            <Trash2 className="mr-2 size-4" />
+            Remove
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
