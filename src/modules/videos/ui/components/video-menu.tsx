@@ -17,14 +17,14 @@ interface VideoMenuProps {
   videoId: string;
   variants?: "ghost" | "secondary";
   onRemove?: () => void;
-  isOwner: boolean;
+  isOwner?: boolean;
 }
 
 export const VideoMenu = ({
   videoId,
-  variants,
+  variants = "ghost",
   onRemove,
-  isOwner,
+  isOwner = false,
 }: VideoMenuProps) => {
   const onShare = () => {
     const fullUrl = `${
