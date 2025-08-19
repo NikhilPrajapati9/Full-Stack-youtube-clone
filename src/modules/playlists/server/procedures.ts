@@ -1,37 +1,58 @@
-import { db } from "@/db";
-import { users, videoReactions, videos, videoViews } from "@/db/schema";
-import { createTRPCRouter, baseProcedure } from "@/trpc/init";
-import { TRPCError } from "@trpc/server";
-import { eq, and, or, lt, desc, getTableColumns, not } from "drizzle-orm";
 import { z } from "zod";
+import { db } from "@/db";
+import {
+  subscriptions,
+  users,
+  videoReactions,
+  videos,
+  videoUpdateSchema,
+  videoViews,
+} from "@/db/schema";
+import {
+  baseProcedure,
+  createTRPCRouter,
+  protectedProcedure,
+} from "@/trpc/init";
+import {
+  and,
+  desc,
+  eq,
+  getTableColumns,
+  inArray,
+  isNotNull,
+  lt,
+  or,
+} from "drizzle-orm";
 
-export const suggestionsRouter = createTRPCRouter({
-  getMany: baseProcedure
+export const playlistsRouter = createTRPCRouter({
+  getMany: protectedProcedure
     .input(
       z.object({
-        videoId: z.string().uuid(),
         cursor: z
           .object({
             id: z.string().uuid(),
-            updatedAt: z.date(),
+            viewedAt: z.date(),
           })
           .nullish(),
         limit: z.number().min(1).max(100),
       })
     )
-    .query(async ({ ctx, input }) => {
-      const { videoId, cursor, limit } = input;
+    .query(async ({ input, ctx }) => {
+      const { id: userId } = ctx.user;
+      const { cursor, limit } = input;
 
-      const [existingVideo] = await db
-        .select()
-        .from(videos)
-        .where(eq(videos.id, videoId));
-
-      if (!existingVideo) {
-        throw new TRPCError({ code: "NOT_FOUND" });
-      }
+      const viewerVideoViews = db.$with("viewer_video_views").as(
+        db
+          .select({
+            videoId: videoViews.videoId,
+            viewedAt: videoViews.createdAt,
+          })
+          .from(videoViews)
+          .where(eq(videoViews.userId, userId))
+      );
 
       const data = await db
+        .with(viewerVideoViews)
         .select({
           ...getTableColumns(videos),
           user: users,
@@ -52,19 +73,18 @@ export const suggestionsRouter = createTRPCRouter({
           ),
         })
         .from(videos)
-        .leftJoin(users, eq(users.id, videos.userId))
+        .innerJoin(users, eq(users.id, videos.userId))
+        .innerJoin(viewerVideoViews, eq(viewerVideoViews.videoId, videos.id))
+
         .where(
           and(
-            not(eq(videos.id, existingVideo.id)),
             eq(videos.visibility, "public"),
-            existingVideo.categoryId
-              ? eq(videos.categoryId, existingVideo.categoryId)
-              : undefined,
+
             cursor
               ? or(
-                  lt(videos.updatedAt, cursor.updatedAt),
+                  lt(videos.updatedAt, cursor.viewedAt),
                   and(
-                    eq(videos.updatedAt, cursor.updatedAt),
+                    eq(videos.updatedAt, cursor.viewedAt),
                     lt(videos.id, cursor.id)
                   )
                 )

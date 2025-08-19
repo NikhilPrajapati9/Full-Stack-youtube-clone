@@ -8,7 +8,7 @@ import { UserInfo } from "@/modules/users/ui/components/user-info";
 import { UserAvatar } from "@/components/user-avatar";
 
 import { VideoMenu } from "./video-menu";
-import { VideoThumbnail } from "./video-thumbnail";
+import { VideoThumbnail, VideoThumbnailSkeleton } from "./video-thumbnail";
 import { VideoGetManyOutput } from "../../types";
 import {
   Tooltip,
@@ -45,10 +45,43 @@ interface VideoRowCardProps extends VariantProps<typeof videoRowCardVariants> {
   onRemove?: () => void;
 }
 
-export const VideoRowCardSkeleton = () => {
+export const VideoRowCardSkeleton = ({
+  size = "default",
+}: VariantProps<typeof videoRowCardVariants>) => {
   return (
-    <div>
-      <Skeleton />
+    <div className={`${videoRowCardVariants({ size })}`}>
+      {/* Thumbnail Skeleton */}
+      <div className={thumbnailVariants({ size })}>
+        <VideoThumbnailSkeleton />
+      </div>
+
+      {/* Info Section Skeleton */}
+      <div className="flex-1 min-w-0">
+        <div className="flex justify-between gap-x-2">
+          <div className="flex-1 min-w-0">
+            <Skeleton
+              className={cn("h-5 w-[40%]", size === "compact" && "h-4 w-[40%")}
+            />
+            {size === "default" && (
+              <>
+                <Skeleton className="h-4 w-[20%] mt-1" />
+                <div className="flex items-center gap-2 my-3">
+                  <Skeleton className="size-8 rounded-full" />
+                  <Skeleton className="h-4 w-24" />
+                </div>
+              </>
+            )}
+            {size === "compact" && (
+              <>
+                <Skeleton className="h-4 w-[50%] mt-1" />
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Menu Button */}
+      <Skeleton className="h-6 w-6 flex-none" />
     </div>
   );
 };
@@ -58,8 +91,6 @@ export const VideoRowCard = ({
   onRemove,
   size = "default",
 }: VideoRowCardProps) => {
-
-
   const compactViews = useMemo(() => {
     return Intl.NumberFormat("en", {
       notation: "compact",
@@ -71,7 +102,7 @@ export const VideoRowCard = ({
       notation: "compact",
     }).format(data.likeCount);
   }, [data.likeCount]);
-  
+
   return (
     <div className={`${videoRowCardVariants({ size })} mb-4`}>
       <Link href={`/videos/${data.id}`} className={thumbnailVariants({ size })}>

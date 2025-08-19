@@ -1,7 +1,9 @@
-import { DEFAULT_LIMIT } from "@/constant";
-import { VideoView } from "@/modules/videos/ui/views/video-view";
-import { HydrateClient, trpc } from "@/trpc/server";
 import React from "react";
+import { DEFAULT_LIMIT } from "@/constant";
+import { HydrateClient, trpc } from "@/trpc/server";
+import { VideoView } from "@/modules/videos/ui/views/video-view";
+
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{

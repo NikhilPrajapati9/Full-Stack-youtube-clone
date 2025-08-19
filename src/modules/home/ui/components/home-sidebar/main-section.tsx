@@ -7,10 +7,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { url } from "inspector";
+
 import { FlameIcon, HomeIcon, PlaySquareIcon } from "lucide-react";
 import Link from "next/link";
-import { title } from "process";
 import { useAuth, useClerk } from "@clerk/nextjs";
 
 const items = [
@@ -20,8 +19,8 @@ const items = [
     icon: HomeIcon,
   },
   {
-    title: "Subscriptions",
-    url: "/feed/subscriptions",
+    title: "subscribed",
+    url: "/feed/subscribed",
     icon: PlaySquareIcon,
     auth: true,
   },

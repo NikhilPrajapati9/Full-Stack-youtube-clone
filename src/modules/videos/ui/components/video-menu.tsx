@@ -12,6 +12,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
+import { APP_URL } from "../../constants";
 
 interface VideoMenuProps {
   videoId: string;
@@ -28,7 +29,7 @@ export const VideoMenu = ({
 }: VideoMenuProps) => {
   const onShare = () => {
     const fullUrl = `${
-      process.env.VERCEL_URL || "http://localhost:3000"
+      APP_URL
     }/videos/${videoId}`;
     navigator.clipboard.writeText(fullUrl);
     toast.success("Link copied to the clipboard");

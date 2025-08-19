@@ -31,27 +31,28 @@ export const VideoDescription = ({
           {isExpanded ? expandedViews : compactViews} views
         </span>
         <span className="font-medium">
-          {isExpanded ? expandedDate : compactDate} views
+          {isExpanded ? expandedDate : compactDate}
         </span>
       </div>
       <div className="relative">
-        <p className={cn("text-sm whitespace-pre-wrap",
+        <p
+          className={cn(
+            "text-sm whitespace-pre-wrap",
             !isExpanded && "line-clamp-2"
-        )}>
-         {description || "No description"}
+          )}
+        >
+          {description || "No description"}
         </p>
-        <div className="flex items-center gap-1 mt-4 text-sm font-medium" >
-           {
-            isExpanded ? (
-                <>
-                Show less <ChevronUpIcon className="size-4"/> 
-                </>
-            ) : (
-                <>
-                Show more <ChevronDownIcon className="size-4"/> 
-                </>
-            )
-           }
+        <div className="flex items-center gap-1 mt-4 text-sm font-medium">
+          {isExpanded ? (
+            <>
+              Show less <ChevronUpIcon className="size-4" />
+            </>
+          ) : (
+            <>
+              Show more <ChevronDownIcon className="size-4" />
+            </>
+          )}
         </div>
       </div>
     </div>

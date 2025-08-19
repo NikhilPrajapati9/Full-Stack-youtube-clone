@@ -2,9 +2,11 @@
 
 import { DEFAULT_LIMIT } from "@/constant";
 import { trpc } from "@/trpc/client";
-import { VideoRowCard } from "../components/video-row-card";
-import { VideoGridCard } from "../components/video-grid-card";
+import { VideoRowCard, VideoRowCardSkeleton } from "../components/video-row-card";
+import { VideoGridCard, VideoGridCardSkeleton } from "../components/video-grid-card";
 import { InfiniteScroll } from "@/components/inifinte-scroll";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 interface SuggestionsSectionProps {
   videoId: string;
@@ -12,6 +14,39 @@ interface SuggestionsSectionProps {
 }
 
 export const SuggestionsSection = ({
+  videoId,
+  isManual,
+}: SuggestionsSectionProps) => {
+  return (
+    <Suspense fallback={<SuggestionsSectionSkeleton />}>
+      <ErrorBoundary fallback={<p>Error...</p>}>
+        <SuggestionsSectionSuspense videoId={videoId} isManual={isManual} />
+      </ErrorBoundary>
+    </Suspense>
+  );
+};
+
+const SuggestionsSectionSkeleton = () => {
+  return (
+    <>
+      {/* Desktop View Skeleton */}
+      <div className="hidden md:block space-y-3">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <VideoRowCardSkeleton size="compact" key={`desktop-skeleton-${index}`} />
+        ))}
+      </div>
+
+      {/* Mobile View Skeleton */}
+      <div className="block md:hidden space-y-10">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <VideoGridCardSkeleton key={`mobile-skeleton-${index}`} />
+        ))}
+      </div>
+    </>
+  );
+};
+
+const SuggestionsSectionSuspense = ({
   videoId,
   isManual,
 }: SuggestionsSectionProps) => {
