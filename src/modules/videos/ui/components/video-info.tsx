@@ -10,6 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 interface VideoInfoProps {
   data: VideoGetManyOutput["items"][number];
   onRemove?: () => void;
+  isOnRemovePanding?: boolean;
 }
 
 export const VideoInfoSkeleton = () => {
@@ -24,7 +25,11 @@ export const VideoInfoSkeleton = () => {
   );
 };
 
-export const VideoInfo = ({ data, onRemove }: VideoInfoProps) => {
+export const VideoInfo = ({
+  data,
+  onRemove,
+  isOnRemovePanding,
+}: VideoInfoProps) => {
   const compactViews = useMemo(() => {
     return Intl.NumberFormat("en", {
       notation: "compact",
@@ -56,7 +61,7 @@ export const VideoInfo = ({ data, onRemove }: VideoInfoProps) => {
         </Link>
       </div>
       <div className="flex-shrink-0">
-        <VideoMenu videoId={data.id} onRemove={onRemove} />
+        <VideoMenu videoId={data.id} onRemove={onRemove} isOnRemovePanding={isOnRemovePanding} />
       </div>
     </div>
   );

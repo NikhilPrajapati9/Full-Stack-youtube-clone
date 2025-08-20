@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 interface VideoRowCardProps {
   data: VideoGetManyOutput["items"][number];
   onRemove?: () => void;
+  isOnRemovePanding?: boolean;
 }
 
 export const VideoGridCardSkeleton = () => {
@@ -18,7 +19,11 @@ export const VideoGridCardSkeleton = () => {
   );
 };
 
-export const VideoGridCard = ({ data, onRemove }: VideoRowCardProps) => {
+export const VideoGridCard = ({
+  data,
+  onRemove,
+  isOnRemovePanding,
+}: VideoRowCardProps) => {
   return (
     <div className="flex flex-col gap-2 w-full group">
       <Link href={`/videos/${data.id}`}>
@@ -29,7 +34,7 @@ export const VideoGridCard = ({ data, onRemove }: VideoRowCardProps) => {
           duration={data.duration}
         />
       </Link>
-      <VideoInfo data={data} onRemove={onRemove} />
+      <VideoInfo data={data} onRemove={onRemove} isOnRemovePanding={isOnRemovePanding} />
     </div>
   );
 };

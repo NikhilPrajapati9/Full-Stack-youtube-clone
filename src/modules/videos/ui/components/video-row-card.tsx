@@ -43,6 +43,7 @@ const thumbnailVariants = cva("relative flex-none", {
 interface VideoRowCardProps extends VariantProps<typeof videoRowCardVariants> {
   data: VideoGetManyOutput["items"][number];
   onRemove?: () => void;
+  isOnRemovePanding?: boolean;
 }
 
 export const VideoRowCardSkeleton = ({
@@ -90,6 +91,7 @@ export const VideoRowCard = ({
   data,
   onRemove,
   size = "default",
+  isOnRemovePanding
 }: VideoRowCardProps) => {
   const compactViews = useMemo(() => {
     return Intl.NumberFormat("en", {
@@ -169,7 +171,7 @@ export const VideoRowCard = ({
             )}
           </Link>
           <div className="flex-none">
-            <VideoMenu videoId={data.id} onRemove={onRemove} />
+            <VideoMenu videoId={data.id} isOnRemovePanding={isOnRemovePanding} onRemove={onRemove} />
           </div>
         </div>
       </div>
