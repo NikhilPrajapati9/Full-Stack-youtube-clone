@@ -104,7 +104,7 @@ export const VideoRowCard = ({
   }, [data.likeCount]);
 
   return (
-    <div className={`${videoRowCardVariants({ size })} mb-4`}>
+    <div className={`${videoRowCardVariants({ size })}`}>
       <Link href={`/videos/${data.id}`} className={thumbnailVariants({ size })}>
         <VideoThumbnail
           imageUrl={data.thumbnailUrl}

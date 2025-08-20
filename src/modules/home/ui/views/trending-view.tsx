@@ -1,11 +1,7 @@
-import { HomeVideosSection } from "../sections/home-videos-section";
 import { TrendingVideosSection } from "../sections/trending-videos-section";
 
-interface HomeViewProps {
-  categoryId?: string;
-}
 
-export const TrendingView = ({ categoryId }: HomeViewProps) => {
+export const TrendingView = () => {
   return (
     <div className="max-w-[2400px] mx-auto mb-10 px-4 pt-1.5 flex flex-col gap-y-6">
       <div>
