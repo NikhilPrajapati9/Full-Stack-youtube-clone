@@ -9,7 +9,6 @@ import { VideoBanner } from "../components/video-banner";
 import { VideoPlayer, VideoPlayerSkeleton } from "../components/video-player";
 import { VideoTopRow, VideoTopRowSkeleton } from "../components/video-top-row";
 import { useAuth } from "@clerk/nextjs";
-import { toast } from "sonner";
 
 interface VideoSectionProps {
   videoId: string;

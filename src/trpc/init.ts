@@ -4,7 +4,7 @@ import { ratelimit } from "@/lib/ratelimit";
 import { auth } from "@clerk/nextjs/server";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
-import { cache, use } from "react";
+import { cache } from "react";
 import superjson from "superjson";
 
 export const createTRPCContext = cache(async () => {

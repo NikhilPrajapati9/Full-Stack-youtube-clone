@@ -204,7 +204,7 @@ export const videoRelations = relations(videos, ({ one, many }) => ({
 
   views: many(videoViews),
   comments: many(comments),
-  playlistVideos: many(playlistVideos)
+  playlistVideos: many(playlistVideos),
 }));
 
 export const comments = pgTable(
@@ -259,6 +259,11 @@ export const commentsRelations = relations(comments, ({ one, many }) => ({
 export const commentSelectSchema = createSelectSchema(comments);
 export const commentInsterSchema = createInsertSchema(comments);
 export const commentUpdateSchema = createUpdateSchema(comments);
+export const commentInsertClientSchema = commentInsterSchema.omit({
+  userId: true,
+  createdAt: true,
+  updatedAt: true,
+});
 
 export const commentReactions = pgTable(
   "comment_reactions",

@@ -28,7 +28,6 @@ export const VideoMenu = ({
   videoId,
   variants = "ghost",
   onRemove,
-  isOwner = false,
   isOnRemovePanding,
 }: VideoMenuProps) => {
   const [isOpenPlaylistAddModel, setIsOpenPlaylistAddModel] = useState(false);

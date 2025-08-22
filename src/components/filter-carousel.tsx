@@ -42,7 +42,7 @@ export const FilterCarousel = ({
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap() + 1);
     });
-  });
+  },[api]);
   return (
     <div className="relative w-full">
       {/* Left fade  */}

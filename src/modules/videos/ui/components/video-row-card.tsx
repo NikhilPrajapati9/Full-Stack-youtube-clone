@@ -91,7 +91,7 @@ export const VideoRowCard = ({
   data,
   onRemove,
   size = "default",
-  isOnRemovePanding
+  isOnRemovePanding,
 }: VideoRowCardProps) => {
   const compactViews = useMemo(() => {
     return Intl.NumberFormat("en", {
@@ -107,7 +107,11 @@ export const VideoRowCard = ({
 
   return (
     <div className={`${videoRowCardVariants({ size })}`}>
-      <Link prefetch  href={`/videos/${data.id}`} className={thumbnailVariants({ size })}>
+      <Link
+        prefetch
+        href={`/videos/${data.id}`}
+        className={thumbnailVariants({ size })}
+      >
         <VideoThumbnail
           imageUrl={data.thumbnailUrl}
           previewUrl={data.previewUrl}
@@ -119,7 +123,7 @@ export const VideoRowCard = ({
       {/* Info */}
       <div className="flex-1 min-w-0">
         <div className="flex justify-between gap-x-2">
-          <Link prefetch  href={`/videos/${data.id}`} className="flex-1 min-w-0">
+          <Link prefetch href={`/videos/${data.id}`} className="flex-1 min-w-0">
             <h3
               className={cn(
                 "font-medium line-clamp-2",
@@ -137,24 +141,24 @@ export const VideoRowCard = ({
               <>
                 <div className="flex items-center gap-2 my-3">
                   <UserAvatar
-                    imageUrl={data.user.imageUrl}
-                    name={data.user.name}
+                    imageUrl={data?.user?.imageUrl || "/user-placeholder.svg"}
+                    name={data?.user?.name || "User"}
                     size="sm"
                   />
                   <UserInfo
                     size="sm"
-                    name={data.user.name}
+                    name={data?.user?.name || "User"}
                     className="text-sm"
                   />
                 </div>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <p className="text-xs text-muted-foreground w-fit line-clamp-2">
-                      {data.user.description || "No description"}
+                      {data?.description || "No description"}
                     </p>
                   </TooltipTrigger>
                   <TooltipContent
-                    size="bottom"
+                    side="bottom"
                     align="center"
                     className="bg-black/70"
                   >
@@ -163,7 +167,7 @@ export const VideoRowCard = ({
                 </Tooltip>
               </>
             )}
-            {size === "compact" && <UserInfo size="sm" name={data.user.name} />}
+            {size === "compact" && <UserInfo size="sm" name={data?.user?.name || "User" } />}
             {size === "compact" && (
               <p className="text-xs text-muted-foreground mt-1">
                 {compactViews} views • {compactLikes} likes
@@ -171,7 +175,11 @@ export const VideoRowCard = ({
             )}
           </Link>
           <div className="flex-none">
-            <VideoMenu videoId={data.id} isOnRemovePanding={isOnRemovePanding} onRemove={onRemove} />
+            <VideoMenu
+              videoId={data.id}
+              isOnRemovePanding={isOnRemovePanding}
+              onRemove={onRemove}
+            />
           </div>
         </div>
       </div>

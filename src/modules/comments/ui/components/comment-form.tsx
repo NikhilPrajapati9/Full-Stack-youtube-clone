@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { UserAvatar } from "@/components/user-avatar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { trpc } from "@/trpc/client";
-import { commentInsterSchema } from "@/db/schema";
+import { commentInsertClientSchema } from "@/db/schema";
 import {
   Form,
   FormControl,
@@ -51,16 +51,17 @@ export const CommentForm = ({
     },
   });
 
-  const form = useForm<z.infer<typeof commentInsterSchema>>({
-    resolver: zodResolver(commentInsterSchema.omit({ userId: true })),
+
+  const form = useForm<z.infer<typeof commentInsertClientSchema>>({
+    resolver: zodResolver(commentInsertClientSchema),
     defaultValues: {
-      parentId: parentId,
+      parentId,
       videoId,
       value: "",
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof commentInsterSchema>) => {
+  const handleSubmit = (values: z.infer<typeof commentInsertClientSchema>) => {
     create.mutate(values);
   };
 

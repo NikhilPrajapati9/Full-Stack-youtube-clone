@@ -4,9 +4,8 @@ import { Suspense } from "react";
 import { trpc } from "@/trpc/client";
 import { DEFAULT_LIMIT } from "@/constant";
 import { ErrorBoundary } from "react-error-boundary";
-import { VideoGridCardSkeleton } from "@/modules/videos/ui/components/video-grid-card";
 import { InfiniteScroll } from "@/components/inifinte-scroll";
-import { VideoRowCardSkeleton } from "@/modules/videos/ui/components/video-row-card";
+
 import {
   PlaylistGridCart,
   PlaylistGridCartSkeleton,

@@ -60,14 +60,18 @@ export const SubscriptionsSection = () => {
                     asChild
                     isActive={pathname === `/users/${subscription?.user?.id}`}
                   >
-                    <Link prefetch 
+                    <Link
+                      prefetch
                       href={`/users/${subscription?.user?.id}`}
                       className="flex items-center gap-4"
                     >
                       <UserAvatar
-                        name={subscription?.user?.name}
+                        name={subscription?.user?.name || "User"}
                         size="xs"
-                        imageUrl={subscription?.user?.imageUrl}
+                        imageUrl={
+                          subscription?.user?.imageUrl ||
+                          "/user-placeholder.svg"
+                        }
                       />
                       <span className="text-sm">
                         {subscription?.user?.name}
@@ -82,13 +86,13 @@ export const SubscriptionsSection = () => {
                 asChild
                 isActive={pathname === `/subscriptions`}
               >
-                <Link prefetch 
+                <Link
+                  prefetch
                   href={"/subscriptions"}
                   className="flex items-center gap-4"
                 >
                   <ListIcon className="size-4" />
-                  <span className="text-sm"
-                  >All subscriptions</span>
+                  <span className="text-sm">All subscriptions</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

@@ -10,8 +10,6 @@ import {
 } from "@/modules/videos/ui/components/video-grid-card";
 import { InfiniteScroll } from "@/components/inifinte-scroll";
 
-import { VideoRowCardSkeleton } from "@/modules/videos/ui/components/video-row-card";
-
 interface HomeVideosSectionProps {
   categoryId?: string;
 }

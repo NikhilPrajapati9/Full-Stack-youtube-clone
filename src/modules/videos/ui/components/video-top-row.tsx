@@ -37,18 +37,18 @@ export const VideoTopRowSkeleton = () => {
 };
 
 export const VideoTopRow = ({ video }: VideoTopRowProps) => {
-  const { userId: clerkUserId, isLoaded } = useAuth();
+  const { userId: clerkUserId } = useAuth();
 
   const compactViews = useMemo(() => {
     return Intl.NumberFormat("en", {
       notation: "compact",
     }).format(video.videoCount);
-  }, []);
+  }, [video.videoCount]);
   const expendedViews = useMemo(() => {
     return Intl.NumberFormat("en", {
       notation: "standard",
     }).format(video.videoCount);
-  }, []);
+  }, [video.videoCount]);
 
   const compactDate = useMemo(() => {
     return formatDistanceToNow(video.createdAt, { addSuffix: true });

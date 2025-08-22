@@ -1,4 +1,3 @@
-import axios from "axios";
 import { db } from "@/db";
 import { videos } from "@/db/schema";
 import { serve } from "@upstash/workflow/nextjs";
@@ -43,7 +42,7 @@ export const { POST } = serve(async (context) => {
         width: 1792,
         height: 1024,
       });
-      // @ts-ignore
+      // @ts-expect-error: 'data' is not typed correctly by Together SDK response
       return response.data[0].url;
     }
   );

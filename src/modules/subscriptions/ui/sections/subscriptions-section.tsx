@@ -56,7 +56,7 @@ const SubscriptionSectionSuspense = () => {
       utils.videos.getManySubscribed.invalidate();
       utils.users.getOne.invalidate({ id: data.creatorId });
     },
-    onError: (error) => {
+    onError: () => {
       toast.error("Something went wrong");
     },
   });
@@ -66,14 +66,18 @@ const SubscriptionSectionSuspense = () => {
         {subscriptions.pages
           .flatMap((page) => page.items)
           .map((subscription) => (
-            <Link prefetch 
+            <Link
+              prefetch
               href={`users/${subscription?.user?.id}`}
               key={subscription.creatorId}
             >
               <SubscriptionItem
-                name={subscription?.user?.name}
-                imageUrl={subscription?.user?.imageUrl}
-                subscriberCount={subscription?.user?.subscriberCount}
+                name={subscription?.user?.name || "User"}
+                imageUrl={
+                  subscription?.user?.imageUrl || "/user-placeholder.svg"
+                }
+                subscriberCount={subscription?.user?.subscriberCount || 0}
+                isSubscribed={true}
                 onUnsubscribe={() => {
                   unSubscribe.mutate({
                     userId: subscription.creatorId,

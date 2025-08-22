@@ -42,26 +42,33 @@ export const VideoInfo = ({
 
   return (
     <div className="flex gap-3">
-      <Link prefetch  href={`/users/${data.user.id}`}>
-        <UserAvatar imageUrl={data.user.imageUrl} name={data.user.name} />
+      <Link prefetch href={`/users/${data?.user?.id}`}>
+        <UserAvatar
+          imageUrl={data?.user?.imageUrl || "/user-placeholder.svg"}
+          name={data?.user?.name || "User"}
+        />
       </Link>
       <div className="min-w-0 flex-1">
-        <Link prefetch  href={`/videos/${data.id}`}>
+        <Link prefetch href={`/videos/${data.id}`}>
           <h3 className="font-medium line-clamp-1 lg:line-clamp-2 text-base break-words">
             {data.title}
           </h3>
         </Link>
-        <Link prefetch  href={`/users/${data.user.id}`}>
-          <UserInfo name={data.user.name} />
+        <Link prefetch href={`/users/${data?.user?.id}`}>
+          <UserInfo name={data?.user?.name || "User"} />
         </Link>
-        <Link prefetch  href={`/videos/${data.id}`}>
+        <Link prefetch href={`/videos/${data?.id}`}>
           <p className="text-sm text-gray-600 line-clamp-1">
             {compactViews} views • {compactDate}
           </p>
         </Link>
       </div>
       <div className="flex-shrink-0">
-        <VideoMenu videoId={data.id} onRemove={onRemove} isOnRemovePanding={isOnRemovePanding} />
+        <VideoMenu
+          videoId={data.id}
+          onRemove={onRemove}
+          isOnRemovePanding={isOnRemovePanding}
+        />
       </div>
     </div>
   );

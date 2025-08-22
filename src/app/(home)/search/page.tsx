@@ -2,7 +2,7 @@ import { DEFAULT_LIMIT } from "@/constant";
 import { SearchView } from "@/modules/search/ui/views/search-view";
 import { HydrateClient, trpc } from "@/trpc/server";
 
-export const dyanmic = "force-dynamic";
+// export const dyanmic = "force-dynamic";
 
 interface PageProps {
   searchParams: Promise<{

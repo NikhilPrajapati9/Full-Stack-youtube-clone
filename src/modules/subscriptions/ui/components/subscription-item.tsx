@@ -8,6 +8,7 @@ interface SubscriptionItemProps {
   subscriberCount: number;
   onUnsubscribe: () => void;
   disabled: boolean;
+  isSubscribed?: boolean;
 }
 
 export const SubscriptionItemSkeleton = () => {
@@ -34,6 +35,7 @@ export const SubscriptionItem = ({
   subscriberCount,
   onUnsubscribe,
   disabled,
+  isSubscribed
 }: SubscriptionItemProps) => {
   return (
     <div className="flex items-center gap-4">
@@ -54,7 +56,7 @@ export const SubscriptionItem = ({
             onUnsubscribe();
           }}
           disabled={disabled}
-          isSubscribed
+          isSubscribed={isSubscribed}
         />
       </div>
     </div>

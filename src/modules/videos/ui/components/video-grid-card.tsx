@@ -2,7 +2,6 @@ import Link from "next/link";
 import { VideoGetManyOutput } from "../../types";
 import { VideoThumbnail, VideoThumbnailSkeleton } from "./video-thumbnail";
 import { VideoInfo, VideoInfoSkeleton } from "./video-info";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface VideoRowCardProps {
   data: VideoGetManyOutput["items"][number];
