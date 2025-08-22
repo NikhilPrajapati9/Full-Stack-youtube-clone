@@ -24,7 +24,7 @@ export default function RootLayout({
     <ClerkProvider afterSignOutUrl={"/"}>
       <html lang="en">
         <Head>
-          <link rel="icon" href="/logo.svg" />
+          <Link prefetch  rel="icon" href="/logo.svg" />
         </Head>
         <body className={inter.className}>
           <TRPCProvider>
